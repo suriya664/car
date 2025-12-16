@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Details - VELOCITY BLACK</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚗</text></svg>">
+    <style>
+        .car-details-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 100px 2rem 3rem;
+        }
+        .car-gallery {
+            margin-bottom: 3rem;
+        }
+        .main-image {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            border: 3px solid var(--accent);
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .main-image:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 40px rgba(220, 20, 60, 0.5);
+        }
+        .thumbnail-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 1rem;
+        }
+        .thumbnail {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            border: 2px solid var(--extra);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .thumbnail:hover {
+            border-color: var(--secondary);
+            transform: scale(1.05);
+        }
+        .car-info-grid {
+            display: grid;
+            grid-template-columns: 60% 40%;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+        .car-specs-table {
+            width: 100%;
+            margin: 1.5rem 0;
+            border-collapse: collapse;
+        }
+        .car-specs-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--extra);
+            color: var(--accent);
+        }
+        .car-specs-table td:first-child {
+            font-weight: bold;
+            color: var(--text);
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent);
+        }
+        .booking-card {
+            background: var(--subtle);
+            padding: 2rem;
+            border: 2px solid var(--secondary);
+            position: sticky;
+            top: 100px;
+            clip-path: polygon(5% 0%, 100% 0%, 95% 100%, 0% 100%);
+        }
+        .price-breakdown {
+            margin: 1.5rem 0;
+            padding: 1rem 0;
+            border-top: 1px solid var(--extra);
+            border-bottom: 1px solid var(--extra);
+        }
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.8rem;
+        }
+        .price-total {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary);
+            margin-top: 1rem;
+        }
+        .tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--extra);
+        }
+        .tab-button {
+            padding: 1rem 2rem;
+            background: transparent;
+            border: none;
+            color: var(--accent);
+            font-family: var(--font-accent);
+            font-weight: 600;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+        .tab-button.active {
+            color: var(--secondary);
+            border-bottom-color: var(--secondary);
+        }
+        .tab-content {
+            padding: 2rem 0;
+        }
+        .review-item {
+            background: var(--subtle);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--secondary);
+        }
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .reviewer-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .reviewer-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text);
+            font-weight: bold;
+        }
+        @media (max-width: 1024px) {
+            .car-info-grid {
+                grid-template-columns: 1fr;
+            }
+            .booking-card {
+                position: relative;
+                top: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="index.html" class="logo">VELOCITY BLACK</a>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="fleet.html">Fleet</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="locations.html">Locations</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="nav-icons">
+                <a href="#" aria-label="Search"><i class="fas fa-search"></i></a>
+                <a href="#" aria-label="User Account"><i class="fas fa-user"></i></a>
+                <a href="fleet.html" class="btn">Book Now</a>
+            </div>
+            <button class="mobile-menu-toggle" aria-label="Toggle Menu">☰</button>
+        </div>
+    </nav>
+
+    <div class="car-details-container">
+        <!-- CAR GALLERY -->
+        <section class="car-gallery">
+            <img src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=1200&h=600&fit=crop" alt="Mercedes E-Class" class="main-image gallery-image">
+            <div class="thumbnail-gallery">
+                <img src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=400&h=300&fit=crop" alt="Car Interior" class="thumbnail gallery-image">
+                <img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=400&h=300&fit=crop" alt="Car Exterior" class="thumbnail gallery-image">
+                <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=400&h=300&fit=crop" alt="Car Dashboard" class="thumbnail gallery-image">
+                <img src="https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=400&h=300&fit=crop" alt="Car Engine" class="thumbnail gallery-image">
+                <img src="https://images.unsplash.com/photo-1555215695-3004980ad54e?w=400&h=300&fit=crop" alt="Car Back" class="thumbnail gallery-image">
+            </div>
+        </section>
+
+        <!-- CAR INFORMATION -->
+        <div class="car-info-grid">
+            <div>
+                <h1>Mercedes-Benz E-Class 2023</h1>
+                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+                    <span class="car-card-category">Luxury</span>
+                    <span style="color: var(--accent);">2023 Model</span>
+                    <div style="color: #FFD700;">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <span style="color: var(--accent);">(128 reviews)</span>
+                </div>
+                <div class="car-card-price" style="font-size: 2.5rem; margin-bottom: 2rem;">$89/day</div>
+
+                <h3>Specifications</h3>
+                <table class="car-specs-table">
+                    <tr>
+                        <td>Seats</td>
+                        <td>5</td>
+                    </tr>
+                    <tr>
+                        <td>Transmission</td>
+                        <td>Automatic</td>
+                    </tr>
+                    <tr>
+                        <td>Fuel Type</td>
+                        <td>Petrol</td>
+                    </tr>
+                    <tr>
+                        <td>Mileage</td>
+                        <td>12,000 miles</td>
+                    </tr>
+                    <tr>
+                        <td>Engine</td>
+                        <td>2.0L Turbo</td>
+                    </tr>
+                    <tr>
+                        <td>Color</td>
+                        <td>Obsidian Black</td>
+                    </tr>
+                </table>
+
+                <h3>Features</h3>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <i class="fas fa-snowflake"></i>
+                        <span>Air Conditioning</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <span>GPS Navigation</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-bluetooth"></i>
+                        <span>Bluetooth</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-camera"></i>
+                        <span>Backup Camera</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-usb"></i>
+                        <span>USB Port</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Cruise Control</span>
+                    </div>
+                </div>
+
+                <h3>Description</h3>
+                <p>Experience the perfect blend of luxury and performance with the Mercedes-Benz E-Class. This premium sedan offers exceptional comfort, cutting-edge technology, and powerful performance. Perfect for business trips, family vacations, or special occasions. The E-Class features a spacious interior, advanced safety systems, and a smooth ride that makes every journey enjoyable.</p>
+            </div>
+
+            <!-- BOOKING CARD -->
+            <div class="booking-card">
+                <h3 style="margin-bottom: 1.5rem;">Book This Car</h3>
+                <form>
+                    <div class="form-group">
+                        <label for="pickup-loc">Pick-up Location</label>
+                        <select id="pickup-loc" required>
+                            <option value="">Select Location</option>
+                            <option value="airport">Airport</option>
+                            <option value="downtown">Downtown</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="pickup-dt">Pick-up Date & Time</label>
+                        <input type="datetime-local" id="pickup-dt" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="return-loc">Drop-off Location</label>
+                        <select id="return-loc" required>
+                            <option value="">Select Location</option>
+                            <option value="airport">Airport</option>
+                            <option value="downtown">Downtown</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="return-dt">Return Date & Time</label>
+                        <input type="datetime-local" id="return-dt" required>
+                    </div>
+                    <div class="price-breakdown">
+                        <div class="price-row">
+                            <span>Daily Rate × 3 days</span>
+                            <span>$267</span>
+                        </div>
+                        <div class="price-row">
+                            <span>
+                                <input type="checkbox" id="insurance"> Insurance (+$15/day)
+                            </span>
+                            <span>$45</span>
+                        </div>
+                        <div class="price-row">
+                            <span>
+                                <input type="checkbox" id="gps"> GPS (+$5/day)
+                            </span>
+                            <span>$15</span>
+                        </div>
+                        <div class="price-row">
+                            <span>
+                                <input type="checkbox" id="childseat"> Child Seat (+$10/day)
+                            </span>
+                            <span>$30</span>
+                        </div>
+                        <div class="price-total">
+                            <div class="price-row">
+                                <span>Total</span>
+                                <span>$357</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn" style="width: 100%; margin-bottom: 1rem;">Book Now</button>
+                    <button type="button" class="btn btn-secondary" style="width: 100%;">
+                        <i class="fas fa-heart"></i> Add to Wishlist
+                    </button>
+                </form>
+                <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--extra);">
+                    <div class="trust-badge" style="justify-content: center; margin-bottom: 0.5rem;">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Fully Insured</span>
+                    </div>
+                    <div class="trust-badge" style="justify-content: center; margin-bottom: 0.5rem;">
+                        <i class="fas fa-headset"></i>
+                        <span>24/7 Support</span>
+                    </div>
+                    <a href="contact.html" style="color: var(--secondary); text-decoration: none; text-align: center; display: block; margin-top: 1rem;">Contact Support</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- TABS SECTION -->
+        <section>
+            <div class="tabs">
+                <button class="tab-button active" data-tab="overview">Overview</button>
+                <button class="tab-button" data-tab="features">Features & Specs</button>
+                <button class="tab-button" data-tab="terms">Rental Terms</button>
+                <button class="tab-button" data-tab="insurance">Insurance Options</button>
+                <button class="tab-button" data-tab="reviews">Reviews</button>
+            </div>
+
+            <div id="overview" class="tab-content active">
+                <h3>Vehicle Overview</h3>
+                <p>The Mercedes-Benz E-Class represents the pinnacle of luxury sedan engineering. With its elegant design, powerful performance, and cutting-edge technology, it's the perfect choice for discerning drivers who demand the best.</p>
+                <p>This vehicle comes fully serviced and inspected, ensuring a safe and comfortable driving experience. All our vehicles are maintained to the highest standards and are ready for immediate rental.</p>
+            </div>
+
+            <div id="features" class="tab-content">
+                <h3>Features & Specifications</h3>
+                <p><strong>Performance:</strong> 2.0L Turbocharged Engine, 255 HP</p>
+                <p><strong>Safety:</strong> Advanced Driver Assistance Systems, Blind Spot Monitoring, Lane Keep Assist</p>
+                <p><strong>Technology:</strong> MBUX Infotainment System, Apple CarPlay, Android Auto, Wireless Charging</p>
+                <p><strong>Comfort:</strong> Leather Seats, Heated Front Seats, Panoramic Sunroof, Ambient Lighting</p>
+            </div>
+
+            <div id="terms" class="tab-content">
+                <h3>Rental Terms</h3>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="margin-bottom: 1rem;">✓ Minimum age: 25 years</li>
+                    <li style="margin-bottom: 1rem;">✓ Valid driver's license required</li>
+                    <li style="margin-bottom: 1rem;">✓ Credit card deposit: $500</li>
+                    <li style="margin-bottom: 1rem;">✓ Free cancellation up to 24 hours before pickup</li>
+                    <li style="margin-bottom: 1rem;">✓ Unlimited mileage included</li>
+                </ul>
+            </div>
+
+            <div id="insurance" class="tab-content">
+                <h3>Insurance Options</h3>
+                <p><strong>Basic Coverage:</strong> Included in rental price</p>
+                <p><strong>Full Coverage:</strong> $15/day - Comprehensive protection with zero deductible</p>
+                <p><strong>Premium Coverage:</strong> $25/day - Includes roadside assistance and trip interruption coverage</p>
+            </div>
+
+            <div id="reviews" class="tab-content">
+                <h3>Customer Reviews</h3>
+                <div class="review-item">
+                    <div class="review-header">
+                        <div class="reviewer-info">
+                            <div class="reviewer-avatar">JD</div>
+                            <div>
+                                <strong>John Doe</strong>
+                                <div style="color: var(--accent); font-size: 0.9rem;">Verified Customer</div>
+                            </div>
+                        </div>
+                        <div style="color: #FFD700;">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p style="color: var(--accent); margin-bottom: 0.5rem;">December 15, 2023</p>
+                    <p>Excellent car! Very comfortable and smooth ride. The booking process was easy and the pickup was quick. Highly recommend!</p>
+                </div>
+                <div class="review-item">
+                    <div class="review-header">
+                        <div class="reviewer-info">
+                            <div class="reviewer-avatar">SM</div>
+                            <div>
+                                <strong>Sarah Miller</strong>
+                                <div style="color: var(--accent); font-size: 0.9rem;">Verified Customer</div>
+                            </div>
+                        </div>
+                        <div style="color: #FFD700;">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p style="color: var(--accent); margin-bottom: 0.5rem;">December 10, 2023</p>
+                    <p>Perfect for our business trip. The car was clean, well-maintained, and had all the features we needed. Great service!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SIMILAR CARS -->
+        <section class="section" style="padding: 3rem 0;">
+            <div class="section-title">
+                <h2>You May Also Like</h2>
+            </div>
+            <div class="grid grid-4">
+                <div class="car-card">
+                    <div class="car-card-image">
+                        <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&h=600&fit=crop" alt="Audi A6">
+                    </div>
+                    <div class="car-card-content">
+                        <h3 class="car-card-title">Audi A6</h3>
+                        <span class="car-card-category">Sedan</span>
+                        <div class="car-card-price">$79/day</div>
+                        <div class="car-card-actions">
+                            <a href="car-details.html" class="btn" style="flex: 1;">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="car-card">
+                    <div class="car-card-image">
+                        <img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&h=600&fit=crop" alt="BMW M4">
+                    </div>
+                    <div class="car-card-content">
+                        <h3 class="car-card-title">BMW M4</h3>
+                        <span class="car-card-category">Sports</span>
+                        <div class="car-card-price">$129/day</div>
+                        <div class="car-card-actions">
+                            <a href="car-details.html" class="btn" style="flex: 1;">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="car-card">
+                    <div class="car-card-image">
+                        <img src="https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=800&h=600&fit=crop" alt="Range Rover">
+                    </div>
+                    <div class="car-card-content">
+                        <h3 class="car-card-title">Range Rover Sport</h3>
+                        <span class="car-card-category">SUV</span>
+                        <div class="car-card-price">$109/day</div>
+                        <div class="car-card-actions">
+                            <a href="car-details.html" class="btn" style="flex: 1;">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="car-card">
+                    <div class="car-card-image">
+                        <img src="https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800&h=600&fit=crop" alt="Toyota Corolla">
+                    </div>
+                    <div class="car-card-content">
+                        <h3 class="car-card-title">Toyota Corolla</h3>
+                        <span class="car-card-category">Compact</span>
+                        <div class="car-card-price">$45/day</div>
+                        <div class="car-card-actions">
+                            <a href="car-details.html" class="btn" style="flex: 1;">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer carbon-fiber">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>VELOCITY BLACK</h3>
+                <p>Premium car rental service for your every journey. Experience luxury, reliability, and exceptional service.</p>
+                <div class="footer-social">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="fleet.html">Our Fleet</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="locations.html">Locations</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Car Categories</h3>
+                <ul>
+                    <li><a href="fleet.html">Economy</a></li>
+                    <li><a href="fleet.html">Compact</a></li>
+                    <li><a href="fleet.html">Sedan</a></li>
+                    <li><a href="fleet.html">SUV</a></li>
+                    <li><a href="fleet.html">Luxury</a></li>
+                    <li><a href="fleet.html">Sports</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <ul>
+                    <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                    <li><i class="fas fa-envelope"></i> info@velocityblack.com</li>
+                    <li><i class="fas fa-map-marker-alt"></i> 123 Speed Avenue, City, State 12345</li>
+                    <li><i class="fas fa-clock"></i> Open 24/7</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 VELOCITY BLACK. All rights reserved. | <a href="#" style="color: var(--accent);">Privacy Policy</a> | <a href="#" style="color: var(--accent);">Terms of Service</a></p>
+        </div>
+    </footer>
+
+    <button class="back-to-top" aria-label="Back to Top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Fleet - VELOCITY BLACK</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚗</text></svg>">
+    <style>
+        .page-header {
+            background: linear-gradient(135deg, rgba(13, 13, 13, 0.9) 0%, rgba(220, 20, 60, 0.7) 100%), url('https://images.unsplash.com/photo-1492144534655-ae79c2c03457?w=1920&h=600&fit=crop') center/cover;
+            padding: 150px 2rem 80px;
+            text-align: center;
+            margin-top: 70px;
+        }
+        .breadcrumb {
+            margin-top: 1rem;
+            color: var(--accent);
+        }
+        .breadcrumb a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .breadcrumb a:hover {
+            color: var(--secondary);
+        }
+        .fleet-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+            display: grid;
+            grid-template-columns: 25% 75%;
+            gap: 3rem;
+        }
+        .filter-sidebar {
+            background: var(--subtle);
+            padding: 2rem;
+            border: 1px solid var(--extra);
+            clip-path: polygon(0% 0%, 100% 0%, 95% 100%, 0% 100%);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+        .filter-section {
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--extra);
+        }
+        .filter-section:last-child {
+            border-bottom: none;
+        }
+        .filter-section h3 {
+            font-family: var(--font-heading);
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+        .filter-checkbox {
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .filter-checkbox input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--secondary);
+        }
+        .filter-checkbox label {
+            color: var(--accent);
+            cursor: pointer;
+            font-family: var(--font-body);
+        }
+        .price-slider {
+            width: 100%;
+            margin: 1rem 0;
+        }
+        .price-output {
+            color: var(--secondary);
+            font-weight: bold;
+            text-align: center;
+            margin-top: 0.5rem;
+        }
+        .fleet-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .sort-view {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        .sort-view select {
+            padding: 10px;
+            background: var(--subtle);
+            border: 1px solid var(--extra);
+            color: var(--text);
+            font-family: var(--font-body);
+        }
+        .view-toggle {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .view-toggle button {
+            padding: 10px 15px;
+            background: var(--subtle);
+            border: 1px solid var(--extra);
+            color: var(--accent);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .view-toggle button.active {
+            background: var(--secondary);
+            color: var(--text);
+        }
+        .car-listing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 3rem;
+        }
+        .pagination a {
+            padding: 10px 15px;
+            background: var(--subtle);
+            color: var(--text);
+            text-decoration: none;
+            border: 1px solid var(--extra);
+            transition: all 0.3s ease;
+        }
+        .pagination a:hover,
+        .pagination a.active {
+            background: var(--secondary);
+            color: var(--text);
+        }
+        .filter-toggle {
+            display: none;
+            margin-bottom: 1rem;
+        }
+        @media (max-width: 1024px) {
+            .fleet-container {
+                grid-template-columns: 1fr;
+            }
+            .filter-sidebar {
+                position: relative;
+                top: 0;
+                display: none;
+            }
+            .filter-sidebar.active {
+                display: block;
+            }
+            .filter-toggle {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="index.html" class="logo">VELOCITY BLACK</a>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="fleet.html" class="active">Fleet</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="locations.html">Locations</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="nav-icons">
+                <a href="#" aria-label="Search"><i class="fas fa-search"></i></a>
+                <a href="#" aria-label="User Account"><i class="fas fa-user"></i></a>
+                <a href="fleet.html" class="btn">Book Now</a>
+            </div>
+            <button class="mobile-menu-toggle" aria-label="Toggle Menu">☰</button>
+        </div>
+    </nav>
+
+    <!-- PAGE HEADER -->
+    <section class="page-header">
+        <h1>Our Fleet</h1>
+        <div class="breadcrumb">
+            <a href="index.html">Home</a> > Fleet
+        </div>
+    </section>
+
+    <!-- FLEET SECTION -->
+    <div class="fleet-container">
+        <!-- FILTER SIDEBAR -->
+        <aside class="filter-sidebar">
+            <button class="filter-toggle btn" style="width: 100%; margin-bottom: 1rem;">Toggle Filters</button>
+            
+            <div class="filter-section">
+                <h3>Car Type</h3>
+                <div class="filter-checkbox">
+                    <input type="checkbox" id="economy">
+                    <label for="economy">Economy</label>
+                </div>
+                <div class="filter-checkbox">
+                    <input type="checkbox" id="compact">
+                    <label for="compact">Compact</label>
+                </div>
+                <div class="filter-checkbox">
+                    <input type="checkbox" id="sedan">
+                    <label for="sedan">Sedan</label>
+                </div>
+                <div class="filter-checkbox">
+                    <input type="checkbox" id="suv">
+                    <label for="suv">SUV</label>
+                </div>
+                <div class="filter-checkbox">
+                    <input type="checkbox" id="luxury">
+                    <label for="luxury">Luxury</label>
+                </div>
+                <div class="filter-checkbox">
+                    <input type="checkbox" id="sports">
+                    <label for="sports">Sports</label>
+                </div>
+            </div>
+
+            <div class="filter-section">
+                <h3>Price Range</h3>
+                <input type="range" class="price-slider" min="30" max="200" value="200">
+                <div class="price-output">$200/day</div>
+            </div>
+
+            <div class="filter-section">
+                <h3>Transmission</h3>
+                <div class="filter-checkbox">
+                    <input type="checkbox" id="auto">
+                    <label for="auto">Automatic</label>
+                </div>
+                <div class="filter-checkbox">
+                    <input type="checkbox" id="manual">
+                    <label for="manual">Manual</label>
+                </div>
+            </div>
+
+            <div class="filter-section">
+                <h3>Fuel Type</h3>
+                <div class="filter-checkbox">
+                    <input type="checkbox" id="petrol">
+                    <label for="petrol">Petrol</label>
+                </div>
+                <div class="filter-checkbox">
+                    <input type="checkbox" id="diesel">
+                    <label for="diesel">Diesel</label>
+                </div>
+                <div class="filter-checkbox">
+                    <input type="checkbox" id="hybrid">
+                    <label for="hybrid">Hybrid</label>
+                </div>
+                <div class="filter-checkbox">
+                    <input type="checkbox" id="electric">
+                    <label for="electric">Electric</label>
+                </div>
+            </div>
+
+            <div class="filter-section">
+                <h3>Seats</h3>
+                <div class="filter-checkbox">
+                    <input type="checkbox" id="seats2">
+                    <label for="seats2">2 Seats</label>
+                </div>
+                <div class="filter-checkbox">
+                    <input type="checkbox" id="seats4">
+                    <label for="seats4">4 Seats</label>
+                </div>
+                <div class="filter-checkbox">
+                    <input type="checkbox" id="seats5">
+                    <label for="seats5">5 Seats</label>
+                </div>
+                <div class="filter-checkbox">
+                    <input type="checkbox" id="seats7">
+                    <label for="seats7">7+ Seats</label>
+                </div>
+            </div>
+
+            <div class="filter-section">
+                <h3>Features</h3>
+                <div class="filter-checkbox">
+                    <input type="checkbox" id="gps">
+                    <label for="gps">GPS Navigation</label>
+                </div>
+                <div class="filter-checkbox">
+                    <input type="checkbox" id="bluetooth">
+                    <label for="bluetooth">Bluetooth</label>
+                </div>
+                <div class="filter-checkbox">
+                    <input type="checkbox" id="backup">
+                    <label for="backup">Backup Camera</label>
+                </div>
+                <div class="filter-checkbox">
+                    <input type="checkbox" id="sunroof">
+                    <label for="sunroof">Sunroof</label>
+                </div>
+            </div>
+
+            <button class="btn" style="width: 100%;">Apply Filters</button>
+        </aside>
+
+        <!-- CAR LISTING -->
+        <main>
+            <div class="fleet-header">
+                <h2 style="margin: 0;">Available Cars</h2>
+                <div class="sort-view">
+                    <select>
+                        <option>Sort by: Price</option>
+                        <option>Sort by: Popularity</option>
+                        <option>Sort by: Rating</option>
+                    </select>
+                    <div class="view-toggle">
+                        <button class="active"><i class="fas fa-th"></i></button>
+                        <button><i class="fas fa-list"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="car-listing-grid">
+                <div class="car-card">
+                    <div class="car-card-image">
+                        <img src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=800&h=600&fit=crop" alt="Mercedes E-Class">
+                    </div>
+                    <div class="car-card-content">
+                        <h3 class="car-card-title">Mercedes-Benz E-Class 2023</h3>
+                        <span class="car-card-category">Luxury</span>
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+                            <div style="color: #FFD700;">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span style="color: var(--accent); font-size: 0.9rem;">(128 reviews)</span>
+                        </div>
+                        <div class="car-card-price">$89/day</div>
+                        <div class="car-card-features">
+                            <span><i class="fas fa-users"></i> 5</span>
+                            <span><i class="fas fa-cog"></i> Auto</span>
+                            <span><i class="fas fa-gas-pump"></i> Petrol</span>
+                        </div>
+                        <div class="car-card-actions">
+                            <a href="car-details.html" class="btn btn-secondary" style="flex: 1;">View Details</a>
+                            <a href="#" class="btn" style="flex: 1;">Quick Book</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="car-card">
+                    <div class="car-card-image">
+                        <img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&h=600&fit=crop" alt="BMW M4">
+                    </div>
+                    <div class="car-card-content">
+                        <h3 class="car-card-title">BMW M4 Coupe 2023</h3>
+                        <span class="car-card-category">Sports</span>
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+                            <div style="color: #FFD700;">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span style="color: var(--accent); font-size: 0.9rem;">(95 reviews)</span>
+                        </div>
+                        <div class="car-card-price">$129/day</div>
+                        <div class="car-card-features">
+                            <span><i class="fas fa-users"></i> 4</span>
+                            <span><i class="fas fa-cog"></i> Auto</span>
+                            <span><i class="fas fa-gas-pump"></i> Petrol</span>
+                        </div>
+                        <div class="car-card-actions">
+                            <a href="car-details.html" class="btn btn-secondary" style="flex: 1;">View Details</a>
+                            <a href="#" class="btn" style="flex: 1;">Quick Book</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="car-card">
+                    <div class="car-card-image">
+                        <img src="https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=800&h=600&fit=crop" alt="Range Rover">
+                    </div>
+                    <div class="car-card-content">
+                        <h3 class="car-card-title">Range Rover Sport 2023</h3>
+                        <span class="car-card-category">SUV</span>
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+                            <div style="color: #FFD700;">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span style="color: var(--accent); font-size: 0.9rem;">(142 reviews)</span>
+                        </div>
+                        <div class="car-card-price">$109/day</div>
+                        <div class="car-card-features">
+                            <span><i class="fas fa-users"></i> 7</span>
+                            <span><i class="fas fa-cog"></i> Auto</span>
+                            <span><i class="fas fa-gas-pump"></i> Diesel</span>
+                        </div>
+                        <div class="car-card-actions">
+                            <a href="car-details.html" class="btn btn-secondary" style="flex: 1;">View Details</a>
+                            <a href="#" class="btn" style="flex: 1;">Quick Book</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="car-card">
+                    <div class="car-card-image">
+                        <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&h=600&fit=crop" alt="Audi A6">
+                    </div>
+                    <div class="car-card-content">
+                        <h3 class="car-card-title">Audi A6 2023</h3>
+                        <span class="car-card-category">Sedan</span>
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+                            <div style="color: #FFD700;">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                            <span style="color: var(--accent); font-size: 0.9rem;">(87 reviews)</span>
+                        </div>
+                        <div class="car-card-price">$79/day</div>
+                        <div class="car-card-features">
+                            <span><i class="fas fa-users"></i> 5</span>
+                            <span><i class="fas fa-cog"></i> Auto</span>
+                            <span><i class="fas fa-gas-pump"></i> Petrol</span>
+                        </div>
+                        <div class="car-card-actions">
+                            <a href="car-details.html" class="btn btn-secondary" style="flex: 1;">View Details</a>
+                            <a href="#" class="btn" style="flex: 1;">Quick Book</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="car-card">
+                    <div class="car-card-image">
+                        <img src="https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800&h=600&fit=crop" alt="Toyota Corolla">
+                    </div>
+                    <div class="car-card-content">
+                        <h3 class="car-card-title">Toyota Corolla 2023</h3>
+                        <span class="car-card-category">Compact</span>
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+                            <div style="color: #FFD700;">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span style="color: var(--accent); font-size: 0.9rem;">(203 reviews)</span>
+                        </div>
+                        <div class="car-card-price">$45/day</div>
+                        <div class="car-card-features">
+                            <span><i class="fas fa-users"></i> 5</span>
+                            <span><i class="fas fa-cog"></i> Auto</span>
+                            <span><i class="fas fa-gas-pump"></i> Hybrid</span>
+                        </div>
+                        <div class="car-card-actions">
+                            <a href="car-details.html" class="btn btn-secondary" style="flex: 1;">View Details</a>
+                            <a href="#" class="btn" style="flex: 1;">Quick Book</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="car-card">
+                    <div class="car-card-image">
+                        <img src="https://images.unsplash.com/photo-1550355291-bbee04a92027?w=800&h=600&fit=crop" alt="Honda Civic">
+                    </div>
+                    <div class="car-card-content">
+                        <h3 class="car-card-title">Honda Civic 2023</h3>
+                        <span class="car-card-category">Economy</span>
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+                            <div style="color: #FFD700;">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span style="color: var(--accent); font-size: 0.9rem;">(176 reviews)</span>
+                        </div>
+                        <div class="car-card-price">$39/day</div>
+                        <div class="car-card-features">
+                            <span><i class="fas fa-users"></i> 5</span>
+                            <span><i class="fas fa-cog"></i> Manual</span>
+                            <span><i class="fas fa-gas-pump"></i> Petrol</span>
+                        </div>
+                        <div class="car-card-actions">
+                            <a href="car-details.html" class="btn btn-secondary" style="flex: 1;">View Details</a>
+                            <a href="#" class="btn" style="flex: 1;">Quick Book</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pagination">
+                <a href="#" class="active">1</a>
+                <a href="#">2</a>
+                <a href="#">3</a>
+                <a href="#">4</a>
+                <a href="#">Next →</a>
+            </div>
+        </main>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer carbon-fiber">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>VELOCITY BLACK</h3>
+                <p>Premium car rental service for your every journey. Experience luxury, reliability, and exceptional service.</p>
+                <div class="footer-social">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="fleet.html">Our Fleet</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="locations.html">Locations</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Car Categories</h3>
+                <ul>
+                    <li><a href="fleet.html">Economy</a></li>
+                    <li><a href="fleet.html">Compact</a></li>
+                    <li><a href="fleet.html">Sedan</a></li>
+                    <li><a href="fleet.html">SUV</a></li>
+                    <li><a href="fleet.html">Luxury</a></li>
+                    <li><a href="fleet.html">Sports</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <ul>
+                    <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                    <li><i class="fas fa-envelope"></i> info@velocityblack.com</li>
+                    <li><i class="fas fa-map-marker-alt"></i> 123 Speed Avenue, City, State 12345</li>
+                    <li><i class="fas fa-clock"></i> Open 24/7</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 VELOCITY BLACK. All rights reserved. | <a href="#" style="color: var(--accent);">Privacy Policy</a> | <a href="#" style="color: var(--accent);">Terms of Service</a></p>
+        </div>
+    </footer>
+
+    <button class="back-to-top" aria-label="Back to Top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
+

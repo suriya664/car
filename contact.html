@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - VELOCITY BLACK</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚗</text></svg>">
+    <style>
+        .page-header {
+            background: linear-gradient(135deg, rgba(13, 13, 13, 0.9) 0%, rgba(220, 20, 60, 0.7) 100%), url('https://images.unsplash.com/photo-1492144534655-ae79c2c03457?w=1920&h=600&fit=crop') center/cover;
+            padding: 150px 2rem 80px;
+            text-align: center;
+            margin-top: 70px;
+        }
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 60% 40%;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+        .contact-form {
+            background: var(--subtle);
+            padding: 2.5rem;
+            border: 2px solid var(--extra);
+        }
+        .contact-info {
+            background: var(--subtle);
+            padding: 2.5rem;
+            border: 2px solid var(--extra);
+        }
+        .contact-info-item {
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--extra);
+        }
+        .contact-info-item:last-child {
+            border-bottom: none;
+        }
+        .contact-info-item h3 {
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+        .contact-info-item p,
+        .contact-info-item a {
+            color: var(--accent);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        .contact-info-item a:hover {
+            color: var(--secondary);
+        }
+        .map-container {
+            width: 100%;
+            height: 400px;
+            background: var(--subtle);
+            border: 2px solid var(--secondary);
+            margin: 3rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+        }
+        .accordion {
+            background: var(--subtle);
+            margin-bottom: 1rem;
+            border: 1px solid var(--extra);
+        }
+        .accordion-header {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: var(--font-accent);
+            font-weight: 600;
+            color: var(--text);
+            transition: all 0.3s ease;
+        }
+        .accordion-header:hover {
+            background: var(--extra);
+        }
+        .accordion-content {
+            padding: 0 1.5rem;
+            color: var(--accent);
+            line-height: 1.8;
+        }
+        .chat-widget {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: var(--secondary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text);
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 999;
+            box-shadow: 0 5px 20px rgba(220, 20, 60, 0.6);
+            transition: all 0.3s ease;
+        }
+        .chat-widget:hover {
+            transform: scale(1.1);
+            background: var(--highlight);
+        }
+        .support-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        .support-card {
+            background: var(--subtle);
+            padding: 1.5rem;
+            text-align: center;
+            border: 1px solid var(--extra);
+            transition: all 0.3s ease;
+        }
+        .support-card:hover {
+            border-color: var(--secondary);
+            transform: translateY(-5px);
+        }
+        @media (max-width: 1024px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="index.html" class="logo">VELOCITY BLACK</a>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="fleet.html">Fleet</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="locations.html">Locations</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html" class="active">Contact</a></li>
+            </ul>
+            <div class="nav-icons">
+                <a href="#" aria-label="Search"><i class="fas fa-search"></i></a>
+                <a href="#" aria-label="User Account"><i class="fas fa-user"></i></a>
+                <a href="fleet.html" class="btn">Book Now</a>
+            </div>
+            <button class="mobile-menu-toggle" aria-label="Toggle Menu">☰</button>
+        </div>
+    </nav>
+
+    <!-- PAGE HEADER -->
+    <section class="page-header">
+        <h1>Get In Touch</h1>
+        <p style="font-size: 1.2rem; margin-top: 1rem;">We're here to help you with any questions or concerns</p>
+    </section>
+
+    <!-- CONTACT FORM & INFO -->
+    <section class="section">
+        <div class="contact-grid">
+            <!-- CONTACT FORM -->
+            <div class="contact-form">
+                <h2 style="margin-bottom: 2rem;">Send Us a Message</h2>
+                <form>
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <select id="subject" required>
+                            <option value="">Select Subject</option>
+                            <option value="general">General Inquiry</option>
+                            <option value="booking">Booking Support</option>
+                            <option value="corporate">Corporate Rental</option>
+                            <option value="feedback">Feedback</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" rows="6" required style="width: 100%; padding: 12px; background: var(--primary); border: 1px solid var(--extra); color: var(--text); font-family: var(--font-body); resize: vertical;"></textarea>
+                    </div>
+                    <button type="submit" class="btn" style="width: 100%;">Send Message</button>
+                </form>
+            </div>
+
+            <!-- CONTACT INFORMATION -->
+            <div class="contact-info">
+                <h2 style="margin-bottom: 2rem;">Contact Information</h2>
+                
+                <div class="contact-info-item">
+                    <h3><i class="fas fa-map-marker-alt" style="margin-right: 0.5rem;"></i>Headquarters</h3>
+                    <p>123 Speed Avenue</p>
+                    <p>City, State 12345</p>
+                    <p>United States</p>
+                </div>
+
+                <div class="contact-info-item">
+                    <h3><i class="fas fa-phone" style="margin-right: 0.5rem;"></i>Phone</h3>
+                    <a href="tel:+15551234567">+1 (555) 123-4567</a>
+                    <p style="margin-top: 0.5rem; font-size: 0.9rem;">Sales: +1 (555) 123-4568</p>
+                    <p style="font-size: 0.9rem;">Support: +1 (555) 123-4569</p>
+                </div>
+
+                <div class="contact-info-item">
+                    <h3><i class="fas fa-envelope" style="margin-right: 0.5rem;"></i>Email</h3>
+                    <a href="mailto:info@velocityblack.com">info@velocityblack.com</a>
+                    <a href="mailto:sales@velocityblack.com">sales@velocityblack.com</a>
+                    <a href="mailto:support@velocityblack.com">support@velocityblack.com</a>
+                </div>
+
+                <div class="contact-info-item">
+                    <h3><i class="fas fa-clock" style="margin-right: 0.5rem;"></i>Business Hours</h3>
+                    <p>Monday - Friday: 7:00 AM - 8:00 PM</p>
+                    <p>Saturday - Sunday: 8:00 AM - 6:00 PM</p>
+                    <p style="color: var(--secondary); font-weight: bold;">24/7 Emergency Support Available</p>
+                </div>
+
+                <div class="contact-info-item">
+                    <h3>Follow Us</h3>
+                    <div class="footer-social" style="margin-top: 1rem;">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GOOGLE MAP -->
+    <section class="section" style="padding-top: 0;">
+        <div class="map-container">
+            <div style="text-align: center;">
+                <i class="fas fa-map" style="font-size: 4rem; margin-bottom: 1rem; color: var(--secondary);"></i>
+                <p style="font-size: 1.2rem;">Google Maps</p>
+                <p style="color: var(--accent); margin-top: 0.5rem;">123 Speed Avenue, City, State 12345</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ SECTION -->
+    <section class="section" style="background: var(--subtle);">
+        <div class="section-title">
+            <h2>Frequently Asked Questions</h2>
+        </div>
+        <div style="max-width: 900px; margin: 0 auto;">
+            <div class="accordion">
+                <div class="accordion-header">
+                    <span>How do I book a car?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    <p>Booking is easy! Simply use our online booking system on the homepage or fleet page. Select your pickup and drop-off locations, dates, and choose your preferred vehicle. Complete the booking form and you'll receive instant confirmation via email.</p>
+                </div>
+            </div>
+            <div class="accordion">
+                <div class="accordion-header">
+                    <span>What payment methods do you accept?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    <p>We accept all major credit cards (Visa, MasterCard, American Express), debit cards, and PayPal. Corporate accounts can be set up with monthly invoicing options.</p>
+                </div>
+            </div>
+            <div class="accordion">
+                <div class="accordion-header">
+                    <span>What is your cancellation policy?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    <p>Free cancellation up to 24 hours before your scheduled pickup time. Cancellations made within 24 hours may be subject to a fee. Please refer to your rental agreement for specific terms.</p>
+                </div>
+            </div>
+            <div class="accordion">
+                <div class="accordion-header">
+                    <span>What insurance coverage is included?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    <p>Basic liability insurance is included with every rental. We also offer comprehensive coverage options starting at $15/day. Our team can help you choose the right coverage for your needs.</p>
+                </div>
+            </div>
+            <div class="accordion">
+                <div class="accordion-header">
+                    <span>What are the age requirements?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    <p>Minimum age requirement is 25 years old. Drivers must have a valid driver's license and credit card. Additional fees may apply for drivers under 30 years of age.</p>
+                </div>
+            </div>
+            <div class="accordion">
+                <div class="accordion-header">
+                    <span>What documents do I need to rent a car?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    <p>You'll need a valid driver's license, credit card in your name, and proof of insurance (if applicable). International renters may need an International Driving Permit.</p>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-3">
+            <a href="#" class="btn btn-secondary">View All FAQs</a>
+        </div>
+    </section>
+
+    <!-- SUPPORT CATEGORIES -->
+    <section class="section">
+        <div class="section-title">
+            <h2>Quick Support Links</h2>
+        </div>
+        <div class="support-categories">
+            <div class="support-card">
+                <i class="fas fa-calendar-check" style="font-size: 2.5rem; color: var(--secondary); margin-bottom: 1rem;"></i>
+                <h3>Booking Help</h3>
+                <p style="color: var(--accent); font-size: 0.9rem;">Need assistance with your reservation?</p>
+                <a href="#" class="btn btn-secondary" style="margin-top: 1rem; width: 100%;">Get Help</a>
+            </div>
+            <div class="support-card">
+                <i class="fas fa-credit-card" style="font-size: 2.5rem; color: var(--secondary); margin-bottom: 1rem;"></i>
+                <h3>Payment Issues</h3>
+                <p style="color: var(--accent); font-size: 0.9rem;">Questions about billing or payments?</p>
+                <a href="#" class="btn btn-secondary" style="margin-top: 1rem; width: 100%;">Contact Us</a>
+            </div>
+            <div class="support-card">
+                <i class="fas fa-wrench" style="font-size: 2.5rem; color: var(--secondary); margin-bottom: 1rem;"></i>
+                <h3>Technical Support</h3>
+                <p style="color: var(--accent); font-size: 0.9rem;">Website or app not working?</p>
+                <a href="#" class="btn btn-secondary" style="margin-top: 1rem; width: 100%;">Report Issue</a>
+            </div>
+            <div class="support-card">
+                <i class="fas fa-comment-alt" style="font-size: 2.5rem; color: var(--secondary); margin-bottom: 1rem;"></i>
+                <h3>Feedback</h3>
+                <p style="color: var(--accent); font-size: 0.9rem;">Share your experience with us</p>
+                <a href="#" class="btn btn-secondary" style="margin-top: 1rem; width: 100%;">Submit Feedback</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- LIVE CHAT WIDGET -->
+    <div class="chat-widget" aria-label="Live Chat">
+        <i class="fas fa-comments"></i>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer carbon-fiber">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>VELOCITY BLACK</h3>
+                <p>Premium car rental service for your every journey. Experience luxury, reliability, and exceptional service.</p>
+                <div class="footer-social">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="fleet.html">Our Fleet</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="locations.html">Locations</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Car Categories</h3>
+                <ul>
+                    <li><a href="fleet.html">Economy</a></li>
+                    <li><a href="fleet.html">Compact</a></li>
+                    <li><a href="fleet.html">Sedan</a></li>
+                    <li><a href="fleet.html">SUV</a></li>
+                    <li><a href="fleet.html">Luxury</a></li>
+                    <li><a href="fleet.html">Sports</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <ul>
+                    <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                    <li><i class="fas fa-envelope"></i> info@velocityblack.com</li>
+                    <li><i class="fas fa-map-marker-alt"></i> 123 Speed Avenue, City, State 12345</li>
+                    <li><i class="fas fa-clock"></i> Open 24/7</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 VELOCITY BLACK. All rights reserved. | <a href="#" style="color: var(--accent);">Privacy Policy</a> | <a href="#" style="color: var(--accent);">Terms of Service</a></p>
+        </div>
+    </footer>
+
+    <button class="back-to-top" aria-label="Back to Top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
+
